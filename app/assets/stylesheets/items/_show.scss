@@ -67,8 +67,34 @@
           text-align: center;
           a{
             color: white;
+            padding: 16px 226px;
           }
-            
+        }
+        &__edit {
+          width: 620px;
+          height: 60px;
+          background-color:  #EA352D;
+          margin-top: 16px;
+          font-size: 16px;
+          line-height: 60px;
+          text-align: center;
+          a{
+            color: white;
+            padding: 21px 270px;
+          }
+        }
+        &__delete {
+          width: 620px;
+          height: 60px;
+          background-color: rgb(165, 165, 165);
+          margin-top: 16px;
+          font-size: 16px;
+          line-height: 60px;
+          text-align: center;
+          a{
+            color: white;
+            padding: 21px 238px;
+          }
         }
         
         &__header {

@@ -3,7 +3,7 @@
     %h2.single-head.bold
       商品の情報を入力
     %hr.si-container__si-box__si-inner__si-underline
-    = render "devise/shared/error", model: @item
+    -# = render "devise/shared/error", model: @item
     = form_with model: @item, local: true do |f|
       .si-container__si-box__si-picture-box.perimeter
         .si-container__si-box__box-frame
@@ -15,25 +15,34 @@
           %p.si-container__si-box__si-inner__si-picture-box__box-frame__upload-text
             最大10枚までアップロードできます
 
-            
+
           .post__drop__box__container
+            - @item.item_images.each do |url|
+              .preview-box
+                .upper-box
+                  = image_tag "#{url.url}", width: "112", height: "112", alt: "preview"
+                .lower-box
+                  .update-box
+                    %span.edit_btn 編集
+                  .delete-box
+                    %span 削除
+
             .label-content
-              %label{for: "item_item_images_attributes_0_url", class: "label-box", id: "label-box--0"}
+              %label{for: "item_item_images_attributes_#{@item.item_images.length}_url", class: "label-box", id: "label-box--#{@item.item_images.length}"}
+             
                 %pre.label-box__text-visible クリックしてファイルをアップロード
-              .hidden-conten
-                = f.fields_for :item_images do |i|
-                  = i.file_field :url, name: "item[item_images_attributes][][url]", style: "display:none", class: "hidden-field", id: "img"
-                  %input{class:"hidden-field", type: "file", name: "item[item_images_attributes][0][url]", id: "item_item_images_attributes_0_url" }
-                  %input{class:"hidden-field", type: "file", name: "item[item_images_attributes][1][url]", id: "item_item_images_attributes_1_url" }
-                  %input{class:"hidden-field", type: "file", name: "item[item_images_attributes][2][url]", id: "item_item_images_attributes_2_url" }
-                  %input{class:"hidden-field", type: "file", name: "item[item_images_attributes][3][url]", id: "item_item_images_attributes_3_url" }
-                  %input{class:"hidden-field", type: "file", name: "item[item_images_attributes][4][url]", id: "item_item_images_attributes_4_url" }
-                  %input{class:"hidden-field", type: "file", name: "item[item_images_attributes][5][url]", id: "item_item_images_attributes_5_url" }
-                  %input{class:"hidden-field", type: "file", name: "item[item_images_attributes][6][url]", id: "item_item_images_attributes_6_url" }
-                  %input{class:"hidden-field", type: "file", name: "item[item_images_attributes][7][url]", id: "item_item_images_attributes_7_url" }
-                  %input{class:"hidden-field", type: "file", name: "item[item_images_attributes][8][url]", id: "item_item_images_attributes_8_url" }
-                  %input{class:"hidden-field", type: "file", name: "item[item_images_attributes][9][url]", id: "item_item_images_attributes_9_url" }
-                 
+            .hidden-conten
+              = f.fields_for :item_images do |i|
+
+                //プレビューが出ている分のfile_fieldとdelete用のチェックボックスを設置
+                = i.file_field :url, class: "hidden-field"
+                = i.check_box:_destroy, class: "hidden-checkbox"
+
+                //10個のfile_fieldを準備するに当たって、足りない分を表示
+              - @item.item_images.length.upto(9) do |i|
+                %input{name: "item[item_images_attributes][#{i}][url]", id: "item_item_images_attributes_#{i}_url", class:"hidden-field", type:"file"}
+
+
 
 
       %hr.si-container__si-box__si-inner__si-underline

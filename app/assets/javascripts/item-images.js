@@ -7,10 +7,10 @@ $(document).on('turbolinks:load', function(){
                       <img src="" alt="preview">
                     </div>
                     <div class="lower-box">
-                      <div class="update-box">
+											<div class="update-box", id ="item_item_images_attributes_${count}_url">
                         <span class="edit_btn">編集</span>
                       </div>
-                      <div class="delete-box" id="delete_btn_${count}">
+                      <div class="delete-box", id="delete_btn_${count}" "item_item_images_attributes_${count}__destroy"}>
                         <span>削除</span>
                       </div>
                     </div>
@@ -20,23 +20,61 @@ $(document).on('turbolinks:load', function(){
 
     // 投稿編集時
     if (window.location.href.match(/\/items\/\d+\/edit/)){
-      var prevContent = $('.label-content').prev();
-      labelWidth = (620 - $(prevContent).css('width').replace(/[^0-9]/g, ''));
-      $('.label-content').css('width', labelWidth);
+      var prevCount = $('.preview-box').length
+      if (prevCount == 1) {
+        $('.label-content').css('width', 496)
+      }
+      if (prevCount == 2) {
+        $('.label-content').css('width', 372 )
+      }
+      if (prevCount == 3) {
+        $('.label-content').css('width', 248 )
+      }
+      if (prevCount == 4) {
+        $('.label-content').css('width', 124 )
+      }
+      if (prevCount == 5) {
+        $('.label-content').css('width', 620)
+      }
+      if (prevCount == 6) {
+        $('.label-content').css('width', 496)
+      }
+      if (prevCount == 7) {
+        $('.label-content').css('width', 372)
+      }
+      if (prevCount == 8) {
+        $('.label-content').css('width', 248 )
+      }
+      if (prevCount == 9) {
+        $('.label-content').css('width', 124 )
+      }
+
       $('.preview-box').each(function(index, box){
         $(box).attr('id', `preview-box__${index}`);
       })
+      $('.update-box').each(function(index, box){
+        $(box).attr('id', `item_item_images_attributes_${index}_url`);
+      })
       $('.delete-box').each(function(index, box){
-        $(box).attr('id', `delete_btn_${index}`);
+        $(box).attr('id', `item_item_images_attributes_${index}__destroy`);
       })
       var count = $('.preview-box').length;
       if (count == 10) {
         $('.label-content').hide();
       }
+      $(document).on('click', '.update-box', function() {
+        var updId = $(this).attr('id')
+        $(`input#${updId}`).trigger('click');      
+      })
+      $(document).on('click', '.delete-box', function() {
+        var delId = $(this).attr('id')
+        $(`input#${delId}`).prop('checked', true);        
+      })
     }
+
+
     //=============================================================================
 
-    // ラベルのwidth操作
     function setLabel() {
 
       var count = $('.preview-box').length;
@@ -70,13 +108,18 @@ $(document).on('turbolinks:load', function(){
       if (count == 9) {
         $('.label-content').css('width', 124)
       }
-    }
+		}
+		
+		$(document).on('click', '.update-box', function() {
+			var updId = $(this).attr('id')
+			$(`input#${updId}`).trigger('click');      
+		})
     
 
     $(document).on('change', '.hidden-field', function() {
       setLabel();
       var id = $(this).attr('id').replace(/[^0-9]/g, '');
-      $('.label-box').attr({id: `label-box--${id}`,for: `item_images_attributes_${id}_image`});
+      $('.label-box').attr({id: `label-box--${id}`,for: `item_item_images_attributes_${id}_url`});
       var file = this.files[0];
       var reader = new FileReader();
       reader.readAsDataURL(file);
@@ -99,11 +142,35 @@ $(document).on('turbolinks:load', function(){
         //=============================================================================
 
         setLabel();
-        if(count < 10){
-          $('.label-box').attr({id: `label-box--${count}`,for: `item_images_attributes_${count}_image`});
-        }
+        // if(count < 10){
+        //   $('.label-box').attr({id: `label-box--${count}`,for: `item_item_images_attributes_${count}_url`});
+				// }
+				
+				var id = [];
+				$('.preview-box').each(function(index, box){
+					id[index] = $(box).attr('id').replace(/[^0-9]/g, '');
+				});
+
+				var x = $('.preview-box').length
+				for(var index=0; index<x+1; index++){
+					var y = 0
+
+					id.map(function(num){
+						if (index == num) {
+							y = 1
+							return false;
+						}
+					});
+
+					if (y==0){
+						$('.label-box').attr({id: `label-box--${index}`,for: `item_item_images_attributes_${index}_url`});
+						return false;
+					}
+				}
       }
     });
+
+
 
     $(document).on('click', '.delete-box', function() {
       var count = $('.preview-box').length;
@@ -115,27 +182,46 @@ $(document).on('turbolinks:load', function(){
 
       //新規投稿時
       if ($(`#item_images_attributes_${id}__destroy`).length == 0) {
-        $(`#item_images_attributes_${id}_image`).val("");
-        var count = $('.preview-box').length;
-        if (count == 9) {
-          $('.label-content').show();
-        }
-        setLabel(count);
-        if(id < 10){
-          $('.label-box').attr({id: `label-box--${id}`,for: `item_images_attributes_${id}_image`});
+        // $(`#item_item_images_attributes_${id}_url`).val("");
+        // var count = $('.preview-box').length;
+        // if (count == 9) {
+        //   $('.label-content').show();
+        // }
+        // setLabel(count);
+        // if(id < 10){
+        //   $('.label-box').attr({id: `label-box--${id}`,for: `item_item_images_attributes_${id}_url`});
 
-        }
+				// }
+
+				
+				var id = [];
+				$('.preview-box').each(function(index, box){
+					id[index] = $(box).attr('id').replace(/[^0-9]/g, '');
+				});
+
+				$('.preview-box').each(function(index){
+					var y = 0
+
+					id.forEach(function(num){
+						if (index == num) {
+							y = 1
+							return false;
+						}
+					});
+
+					if (y==0){
+						$('.label-box').attr({id: `label-box--${index}`,for: `item_item_images_attributes_${index}_url`});
+						return false;
+					}
+				});
+				console.log(id)
+
       } else {
 
         //投稿編集時
         $(`#item_images_attributes_${id}__destroy`).prop('checked',true);
-        if (count == 10) {
+        if (count == 9) {
           $('.label-content').show();
-        }
-
-        setLabel();
-        if(id < 10){
-          $('.label-box').attr({id: `label-box--${id}`,for: `item_images_attributes_${id}_image`});
         }
       }
       //=============================================================================

@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, expect: [:show]
-  before_action :set_item, only: [:show ,:destroy]
+  before_action :set_item, only: [:show ,:destroy, :edit, :update]
 
   def show
     @item_image = @item.item_images[0].url.url
@@ -37,11 +37,24 @@ class ItemsController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    # binding.pry
+    if current_user.id == @item.user_id && @item.update(item_params)
+      redirect_to item_path(params[:id])
+    else
+      render :edit
+    end
+  end
+
+
 
   private
   
   def item_params
-    params.require(:item).permit(:name, :description, :category_id, :price, :condition_id , :shipping_fee_who_id, :prefecture_id, :shipping_days_id, item_images_attributes: [:url] ).merge(user_id: current_user.id)
+    params.require(:item).permit(:name, :description, :category_id, :price, :condition_id , :shipping_fee_who_id, :prefecture_id, :shipping_days_id, item_images_attributes: [:url, :_destroy, :id] ).merge(user_id: current_user.id)
   end
 
   def set_item
