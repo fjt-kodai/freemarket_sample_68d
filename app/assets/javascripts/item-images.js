@@ -146,16 +146,16 @@ $(document).on('turbolinks:load', function(){
         //   $('.label-box').attr({id: `label-box--${count}`,for: `item_item_images_attributes_${count}_url`});
 				// }
 				
-				var id = [];
+				var id_add = [];
 				$('.preview-box').each(function(index, box){
-					id[index] = $(box).attr('id').replace(/[^0-9]/g, '');
+					id_add[index] = $(box).attr('id').replace(/[^0-9]/g, '');
 				});
 
 				var x = $('.preview-box').length
 				for(var index=0; index<x+1; index++){
 					var y = 0
 
-					id.map(function(num){
+					id_add.map(function(num){
 						if (index == num) {
 							y = 1
 							return false;
@@ -194,15 +194,15 @@ $(document).on('turbolinks:load', function(){
 				// }
 
 				
-				var id = [];
+				var id_add2 = [];
 				$('.preview-box').each(function(index, box){
-					id[index] = $(box).attr('id').replace(/[^0-9]/g, '');
+					id_add2[index] = $(box).attr('id').replace(/[^0-9]/g, '');
 				});
 
 				$('.preview-box').each(function(index){
 					var y = 0
 
-					id.forEach(function(num){
+					id_add2.forEach(function(num){
 						if (index == num) {
 							y = 1
 							return false;
@@ -214,7 +214,6 @@ $(document).on('turbolinks:load', function(){
 						return false;
 					}
 				});
-				console.log(id)
 
       } else {
 
