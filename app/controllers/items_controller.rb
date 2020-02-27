@@ -3,7 +3,7 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:show ,:destroy]
 
   def show
-    @item_image = @item.item_images[0].url.url
+    @item_image = @item.item_images[0].url.ur
     @next_id = set_page(@item.id + 1)
     @prev_id = set_page(@item.id - 1)
   end

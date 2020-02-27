@@ -11,12 +11,14 @@ Rails.application.routes.draw do
   
   root 'home#index'
   resources :items do
+    resources :likes, only: [:create, :destroy]
     resources :orders, only: :new do
       collection do
         get 'new', to: 'orders#new'
         post 'pay', to: 'orders#pay'
         get 'done', to: 'orders#done'
       end
+      
     end
   end
   resources :users, only: [:index, :show, :edit, :update] do

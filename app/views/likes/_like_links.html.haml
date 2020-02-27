@@ -1,0 +1,21 @@
+- if user_signed_in?
+
+  - if item.like_user(current_user.id)
+    -# .item-button-container__left__dislike
+    -#   =link_to item_like_path(item, like), method: "DELETE", remote: true do
+    -#     %i.fas.fa-heart
+    -#     %span いいね！
+    -#     %span 
+    -#       = item.likes_count
+  - else
+    .item-button-container__left__like
+      =link_to item_likes_path(item), method: "POST", remote: true do
+        %i.far.fa-heart
+        %span いいね！
+        %span
+          = item.likes_count
+-else
+  .item-button-container__left__like
+    %i.fas.fa-heart
+      %span いいね！
+      %span = item.likes_count

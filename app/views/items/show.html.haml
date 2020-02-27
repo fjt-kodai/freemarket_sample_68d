@@ -80,9 +80,11 @@
                   = @item.shipping_days.name
         .is-main__content__top__item__option
           %ul
-            %li.like-btn
-              %i= icon('fa', 'star', class: "like-btn-icon")
-              = "お気に入り 0"
+            %li.item-button-container
+              .item-button-container__left
+                = render partial: 'likes/like_links', locals: { item: @item, items: @items, likes: @likes, like: @like}
+
+              
           %ul
             %li.report-box
               = link_to '#', class: "report-box__link" do

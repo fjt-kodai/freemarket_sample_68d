@@ -5,8 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
 
-  has_many :items
+  has_many :items, dependent: :destroy
   has_many :orders
+  has_many :likes, dependent: :destroy
+  has_many :like_items, through: :likes, source: :story
   has_one :credit_card
   has_one :address
 

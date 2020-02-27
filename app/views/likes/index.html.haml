@@ -1,0 +1,11 @@
+.wrapper 
+  = render 'shared/header'
+  .wrapper__main
+    .mp-container
+      = render 'shared/myPageSideBar'
+      = render 'likes-index'
+    = link_to new_item_path, class: 'sell-icon' do
+      = render 'shared/sell-icon'
+
+  = render "/shared/footerFirst"
+  = render "/shared/footerSecond"

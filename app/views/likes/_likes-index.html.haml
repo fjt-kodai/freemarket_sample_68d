@@ -1,0 +1,19 @@
+.mp-container__like-content
+  .mp-container__like-content__one
+    %h2.mp-container__like-content__one__inner いいね！ 一覧
+    %ul.like-list
+      %li.like-list__content
+        = image_tag "logo.png", class: "like-list__content__images"
+        %div.like-list__content__one
+          %div.like-list__content__text   ああああ
+          %div.like-list__content__text2   いいいい
+        %div
+        = link_to '#' do
+          %i.fas.fa-chevron-right
+      %ul.history-content
+        %li
+        = link_to '#' do
+          %i.fas.fa-chevron-left
+        %li
+        = link_to '#' do
+          %i.fas.fa-chevron-right
